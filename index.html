@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supreme Shopping Club</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <script src="scripts/home.js"></script>
+</head>
+
+<style>
+
+    /* Nav bar */
+  .nav_btn{
+    text-align:center; 
+    color:white; 
+    border-radius:3px; 
+    padding-top:13px;
+    font-family: stratos,Helvetica,Arial,Verdana,sans-serif;
+    letter-spacing: 2px;
+    font-weight: 500;
+    background-color: rgb(77, 74, 74);
+    font-size:17px;
+  }
+  .nav_btn:hover{
+    color: rgb(75, 72, 72);
+
+    background-color: #fed143;
+  }
+
+  #cart_info{
+    font-weight:500; 
+    letter-spacing: 2px;
+    font-size: 20px;
+    
+  }
+
+  #link{
+    color:black;
+  }
+
+  #link:hover{
+    color:#fed143;
+  }
+  #card-text{
+    font-weight:500;
+    letter-spacing: 0.01em;
+    font-family: stratos,Helvetica,Arial,Verdana,sans-serif;
+  }
+
+
+    #sickbtn {
+    border: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    outline: none;
+    overflow: hidden;
+    /* position: relative; */
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    background-color: #222;
+    padding: 17px 60px;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  
+    position: absolute;
+    top: 120px;
+    right: 20px;
+  }
+  
+  #sickbtn span {
+    position: relative; 
+    z-index: 1;
+  }
+  
+  #sickbtn:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 490%;
+    width: 140%;
+    background: #FED143;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+    -webkit-transform: translateX(-98%) translateY(-18%) rotate(45deg);
+    transform: translateX(-98%) translateY(-18%) rotate(45deg);
+    color: black;
+  }
+  
+  #sickbtn:hover:after {
+    color: black;
+    -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+    transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  }
+
+  #sickbtn:hover{
+      color:black;
+  }
+
+ 
+</style>
+
+
+<body>
+
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/index.html">
+            <img src="../images/logoBlack.svg" height="50px">
+        </a>
+    
+        <div class="d-inline-flex navigations">
+            <div class="input-wrapper">
+                <input class="input" type="text" placeholder="Search">
+            </div>
+        </div>
+    
+        <div class="d-inline-flex">
+            <div class="btn-group mx-2">
+                <!-- add to cart // change cart display -->
+                <button type="button dropdown" class="cart" data-toggle="dropdown" onclick='nav_createProduct()'>
+                    <img src="../images/shoppingCart.svg" height="20px" alt="Shopping Cart">
+                </button>
+    
+                <div class="dropdown-menu dropdown-menu-right dropdown-content">
+                    <div id='cart_items' class="px-4 py-3 " style='height:250px; width:450px;'>
+                        <!--cart items description-->
+                    </div>
+                    <div class="dropdown-divider "></div>
+                    <a class="dropdown-item nav_btn" style=" height:50px;" href="#" onclick='checkOut()'>
+                        <div>
+                            View Checkout
+                        </div>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="btn-group">
+                <button type="button" class="btn" data-toggle="dropdown" onclick="nav_displayAvatarDropdown()">
+                    <img src="../images/userProfile.svg" height="40px" alt="Avatar">
+                </button>
+    
+                <div class="dropdown-menu dropdown-menu-right " style='width:300px; height:250px;' id='avatarDropdown'>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    
+    <div class="headerimage">
+        <img id="image" class="d-block w-100" src="images/amir-soltani-UZqMaxlFmBM-unsplash.jpg" style="max-width: 100%; height:505px;">
+
+        <h1 class="direction">Free International Shipping <br> All Year Round</h1>
+        <a class="btn" id="sickbtn" href="#aboutus-section"><span>Learn More</span></a>
+    </div>
+
+
+    <section id="top-content">
+        <div id="main_picture"></div>
+    </section>
+    
+
+    <div id="headings">
+        <h3>Trending Now </h3>
+    </div>
+
+    <section id="main-content">
+        <div class="row" id="trending_cards"></div>  
+    </section>
+
+
+    <div id="headings">
+      <h3>Recommended</h3>
+    </div>
+
+    <section id="main-content">
+        <div class="row" id="recommended_cards"></div>  
+    </section>
+
+    
+    <div class="row" id="last_card"></div>
+
+
+
+    <div class="about">
+        <a id= "aboutus-section"></a>
+        <img class="d-block w-100" src="images/david-lezcano-NfZiOJzZgcg-unsplash.jpg" style="max-width: 100%; height: 600px; margin-top: 30px;">
+
+        <div class="box justify-content-center align-items-center" id="block" style="background: black; width: 500px; height: 280px; color:white; padding: 2%">
+            <p> About Us </p>
+
+            <p>At Supreme Shopping Club, we aim to provide easy access to overseas fashion apparel at a minimal (or zero) shipping fee by crowd-sourcing demand for the products.</p>
+              
+            </p>Our platform gives customers the opportunity to order same products together and save on shipping costs. We believe in providing customers with a seamless shopping experience and long-lasting satisfaction. </p>
+        </div>
+    </div>
+
+
+    <footer id ="main-footer">
+        <div class="row" >
+            <div class="col-12 col-md mb-0">
+                <img src="images/logoYellow.svg" width="100px" height="60px" style="max-width:100%;">
+                <!-- <svg xmlns="https://github.com/WAD2-G2-T14/Shopping-Club/blob/main/images/logoYellow.svg"></svg> -->
+                <small class="d-block mb-3 text-muted">&copy; 2020 Supreme</small>
+            </div>
+  
+            <div class="col-6 col-md">
+                <h6>ABOUT</h6>
+                <ul class="list-unstyled text-small">
+                <li><a href="#aboutus-section">About Supreme</a></li>
+                </ul>
+            </div>
+  
+            <div class="col-6 col-md">
+                <h6>PAYMENT METHODS</h6>
+                <ul class="list-unstyled text-small">
+                <img src="https://brand.mastercard.com/content/dam/mccom/brandcenter/thumbnails/mastercard_circles_92px_2x.png" width='60px' height ='30px'>
+                <img src="https://www.visa.com.sg/dam/VCOM/regional/lac/ENG/Default/Partner%20With%20Us/Payment%20Technology/visapos/full-color-800x450.jpg" width='60px' height='30px'>
+                <img src="https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_150x94.png" width='60px' height='30px'>
+                </ul>
+            </div>
+  
+            <div class="col-6 col-md" id="social_media">
+                <h6>FOLLOW SUPREME</h6>
+                <ul class="list-unstyled text-small">
+                <li><a href="https://www.facebook.com/profile.php?id=100057570960529" target="_blank">
+                    <i class="fab fa-facebook-f icon"></i></a></li>
+                <li><a href="https://www.instagram.com/supreme_shopping_club/" target="_blank"><i class="fab fa-instagram icon"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+  
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+    <script src="scripts/navbar.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supreme Leader's Shopping API Documentation</title>
+</head>
+
+<style>
+  body {
+    width: 80%;
+    margin: auto;
+    font-family: Roboto, Helvetica, sans-serif;
+  }
+
+  .container {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 1em;
+    margin-bottom: 1em;
+  }
+
+  .endpoint {
+    border-bottom: 1px solid black;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+  }
+
+  .GET {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: green;
+  }
+
+  .POST {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: orange;
+  }
+
+  .DELETE {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: red;
+  }
+</style>
+
+<body>
+  <h1>Supreme Leader's Shopping API Documentation</h1>
+
+  <div class='container'>
+    <h2>Authentication</h2>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/auth/login.php
+      </h4>
+
+      <p>
+        This api handles user logins and returns the user id and details if successfully verified.
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>username*</li>
+        <li>password*</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"name": "Jonathan Tan Jia Wei"</li>
+        <li>"phone": "91234567"</li>
+        <li>"user_id": "5fa40d29e57d4"</li>
+        <li>"email": "jonathan@mail.com"</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/auth/signup.php
+      </h4>
+
+      <p>
+        This api handles user signups.
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>email*</li>
+        <li>password*</li>
+        <li>name*</li>
+        <li>postal_code*</li>
+        <li>address*</li>
+        <li>city*</li>
+        <li>country*</li>
+        <li>phone_number*</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class='container'>
+    <h2>Items</h2>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/items/all.php
+      </h4>
+
+      <p>
+        This api returns the expiry and order status for all items
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>none</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"01351492" :</li>
+        <ul>
+          <li>"current_orders" : 5</li>
+          <li>"total_required" : 10</li>
+          <li>"expiry" : "2020-12-25"</li>
+        </ul>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/items/show_one.php
+      </h4>
+
+      <p>
+        This api returns the expiry and order status for one item
+      </p>
+
+      <mark>URL Params</mark>
+      <ul>
+        <li>item_id=01351492</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"current_orders" : 5</li>
+        <li>"total_required" : 10</li>
+        <li>"expiry" : "2020-12-25"</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>PUT</span>
+        /api/items/order.php
+      </h4>
+
+      <p>
+        This api handles the ordering logic and accepts the user's cart details
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>"user_id": "01351492"</li>
+        <li>"item_list": (array)</li>
+        <ul>
+          <li>"0" => </li>
+          <li>"item_id": "01351491"</li>
+          <li>"quantity" "1"</li>
+          <li>"1" => </li>
+          <li>"item_id": "01351492"</li>
+          <li>"quantity": "2"</li>
+          <li>...</li>
+        </ul>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class='container'>
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/user/details.php
+      </h4>
+      
+      <p>
+        This api will return the user's details
+      </p>
+
+      <mark>URL Params</mark>
+      <ul>
+        <li>user_id=01351492</li>
+      </ul>
+
+      <mark>Example Response</mark>
+      <ul>
+        <li>"user_id": "01351492"</li>
+        <li>"name": "Jonathan Tan Jia Wei"</li>
+        <li>"email": "jonathan@mail.com"</li>
+        <li>"phone": "96389868"</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/user/address_all.php
+      </h4>
+      
+      <p>
+        This api will return all of the user's addresses
+      </p>
+      
+      <mark>URL Params</mark>
+      <ul>
+        <li>user_id=01351492</li>
+      </ul>
+      
+      <mark>Example Response</mark>
+      <ul>
+        <li>(array)</li>
+        <li>"0" =></li>
+        <ul>
+          <li>"address": "13 Mayflower Road #16-22"</li>
+          <li>"postal_code": ""662813</li>
+          <li>"city": "Singapore"</li>
+          <li>"country": "Singapore"</li>
+        </ul>
+        <li>"1" =></li>
+        <ul>
+          <li>"address": "10 Toh Teng Road #03-69"</li>
+          <li>"postal_code": ""369010</li>
+          <li>"city": "Sin Ka Pur"</li>
+          <li>"country": "Boh Beh Zao"</li>
+        </ul>
+        <li>...</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/user/credit_card_all.php
+      </h4>
+    
+      <p>
+        This api will return all of the user's credit cards
+      </p>
+    
+      <mark>URL Params</mark>
+      <ul>
+        <li>user_id=01351492</li>
+      </ul>
+    
+      <mark>Example Response</mark>
+      <ul>
+        <li>(array)</li>
+        <li>"0" =></li>
+        <ul>
+          <li>"user_id": "5fa40d29e57d4",</li>
+          <li>"card_number": "432188885581",</li>
+          <li>"cardholder_name": "Jonathan Tan",</li>
+          <li>"expiry": "01/22",</li>
+          <li>"cvv_number": "432"</li>
+        </ul>
+        <li>"1" =></li>
+        <ul>
+          <li>"user_id": "5fa40d29e57d4",</li>
+          <li>"card_number": "432188885581",</li>
+          <li>"cardholder_name": "Erik cHOu",</li>
+          <li>"expiry": "01/22",</li>
+          <li>"cvv_number": "432"</li>
+        </ul>
+        <li>...</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/user/add_address.php
+      </h4>
+      
+      <p>
+        This api will add a new addresses
+      </p>
+      
+      <mark>Payload</mark>
+      <ul>
+        <li>user_id*</li>
+        <li>postal_code*</li>
+        <li>address*</li>
+        <li>city*</li>
+        <li>country*</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/user/add_credit_card.php
+      </h4>
+    
+      <p>
+        This api will add a new credit card
+      </p>
+    
+      <mark>Payload</mark>
+      <ul>
+        <li>user_id*</li>
+        <li>card_number*</li>
+        <li>cardholder_name*</li>
+        <li>expiry* (MM/YY)</li>
+        <li>cvv_number*</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/user/edit.php
+      </h4>
+      
+      <p>
+        This api will edit the user's name or email address
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>user_id*</li>
+        <li>fullname*</li>
+        <li>email*</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='DELETE'>DELETE</span>
+        /api/user/delete_address.php
+      </h4>
+      
+      <p>
+        This api will delete a specified address
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>user_id*</li>
+        <li>postal_code*</li>
+        <li>city*</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='DELETE'>DELETE</span>
+        /api/user/delete_credit_card.php
+      </h4>
+    
+      <p>
+        This api will delete a specified credit card
+      </p>
+    
+      <mark>Payload</mark>
+      <ul>
+        <li>user_id*</li>
+        <li>card_number*</li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

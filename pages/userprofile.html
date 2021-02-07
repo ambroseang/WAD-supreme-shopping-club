@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=	, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles/userprofile.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+
+    <!-- Custom JavaScript -->
+    <script src="../scripts/userprofile.js"></script>
+    <script src='../scripts/navbar.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyCnWT0uuPRQdwiqKkzVAP8D7Xld69vwGuk"></script>
+
+    <!-- Vue js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    
+    <title>User Profile</title>
+
+    <style>
+        
+        .nav_btn{
+            text-align:center; 
+            color:white; 
+            border-radius:3px; 
+            padding-top:13px;
+            font-family: stratos,Helvetica,Arial,Verdana,sans-serif;
+            letter-spacing: 2px;
+            font-weight: 500;
+            background-color: rgb(77, 74, 74);
+            font-size:17px;
+        }
+        .nav_btn:hover{
+            color: rgb(75, 72, 72);
+        
+            background-color: #fed143;
+        }
+
+        #cart_info{
+            font-weight:500; 
+            letter-spacing: 2px;
+            font-size: 20px;
+            
+        }
+
+        #link{
+            color:black;
+        }
+
+        #link:hover{
+            color:#fed143;
+        }
+        #card-text{
+            font-weight:500;
+            letter-spacing: 0.01em;
+            font-family: stratos,Helvetica,Arial,Verdana,sans-serif;
+        }
+
+    </style>
+</head>
+
+<body onload="display_default()">
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/index.html">
+            <img src="../images/logoBlack.svg" height="50px">
+        </a>
+    
+        <div class="d-inline-flex navigations">
+            <div class="input-wrapper">
+                <input class="input" type="text" placeholder="Search">
+            </div>
+        </div>
+    
+        <div class="d-inline-flex">
+            <div class="btn-group mx-2">
+                <!-- add to cart // change cart display -->
+                <button type="button dropdown" class="cart" data-toggle="dropdown" onclick='nav_createProduct()'>
+                    <img src="../images/shoppingCart.svg" height="20px" alt="Shopping Cart">
+                </button>
+    
+                <div class="dropdown-menu dropdown-menu-right dropdown-content">
+                    <div id='cart_items' class="px-4 py-3 " style='height:250px; width:450px;'>
+                        <!--cart items description-->
+                    </div>
+                    <div class="dropdown-divider "></div>
+                    <a class="dropdown-item nav_btn" style=" height:50px;" href="#" onclick='checkOut()'>
+                        <div>
+                            View Checkout
+                        </div>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="btn-group">
+                <button type="button" class="btn" data-toggle="dropdown" onclick="nav_displayAvatarDropdown()">
+                    <img src="../images/userProfile.svg" height="40px" alt="Avatar">
+                </button>
+    
+                <div class="dropdown-menu dropdown-menu-right " style='width:300px; height:250px;' id='avatarDropdown'>
+    
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- <div class="wrapper"> -->
+    <div class="sidebar">
+        <header>MY ACCOUNT</header>
+        <ul class="list-unstyled">
+            <li class="link active" onClick="redirect()"><a href="#" id="my-details-icon" ><svg width="30" height="30" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>My Details</a></li>
+            <li class="link" onClick="new_password_page()"><a href="#" id="change-password-icon"><svg width="30" height="30" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.5 8h-7a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-7-1a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-7zm0-3a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/></svg>Change password</a></li>
+            <li class="link" onClick="display_address_page()"><a href="#" id="my-addresses-icon"><svg width="30" height="30" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/><path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/></svg>My Addresses</a></li>
+            <li class="link" onClick="display_cards_page()"><a href="#" id="my-cards-icon"><svg width="30" height="30" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/><path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/></svg>My Cards</a></li>
+            <li class="link" onClick="display_orders_page()"><a href="#" id="my-orders-icon"><svg width="30" height="30" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 1a2.5 2.5 0 0 0-2.5 2.5V4h5v-.5A2.5 2.5 0 0 0 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5H2z"/></svg>My Orders</a></li>
+        </ul>
+    </div>
+    <!-- </div> -->
+    
+    <div id="main-content">
+        
+            <div class="my-details-header">
+                <svg width="30" height="30" viewBox="0 0 20 20" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                  </svg>
+                <header>MY DETAILS</header>
+            </div>
+            
+            <div class="my-details-content">
+                <br>
+                <div id="details-content">
+                    <form>
+                        <label>
+                            FULL NAME 
+                        </label><br>
+                        <input class="form-control col-md-6" type="text" id="my_details_fullname" >
+                        
+                        <br>
+                        
+                        <label>
+                            EMAIL ADDRESS
+                        </label><br>
+                        <input class="form-control col-md-6" type="text" id="my_details_email">
+                        
+                        <br>
+
+                        <label>
+                            MOBILE PHONE
+                        </label><br>
+                        <input class="form-control col-md-4" type="text" id="my_details_mobile_number">
+
+                        <br><br>
+
+                        <button class=" btn btn-sm" id="save-changes-button" type="submit" onclick="edit_my_details()">SAVE CHANGES</button>
+                        <br><br>
+                    </form>
+                </div>
+               
+            </div>
+    </div>
+
+    <!--
+    <script>
+    
+        // new Vue({
+        //     el: '#details-content',
+        //     data:{
+        //         initial_fullname: document.getElementById("my_details_fullname").value,
+        //         new_fullname: "",
+
+        //         initial_email: document.getElementById("my_details_email").value,
+        //         new_email: "",
+
+        //         initial_mobile_number: document.getElementById("my_details_mobile_number").value,
+        //         new_mobile_number: ""
+        //     }
+        // })
+        
+        // v-model="new_fullname"
+        // v-model="new_address"
+        // v-model="new_mobile_number"
+        // v-bind:disabled="new_fullname === '' && new_address === '' && new_mobile_number === '' "
+
+        
+    </script>-->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    
+
+
+</body>
+</html>
